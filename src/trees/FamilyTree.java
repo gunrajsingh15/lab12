@@ -31,12 +31,29 @@ public class FamilyTree
         
         void addChild(TreeNode childNode)
         {
+
         	this.children.add(childNode);
         	childNode.parent = this;
             // Add childNode to this node's children list. Also
             // set childNode's parent to this node.
         	
+
+            if(parent == null)
+            {
+            	return;
+            	
+            }
+            
+            else
+            {
+            	childNode.parent = this;
+            	parent.children.add(childNode);
+            }
+         // Add childNode to this node's children list. Also
+          // set childNode's parent to this node.
+
         }
+        
         
         
         // Searches subtree at this node for a node
@@ -44,18 +61,27 @@ public class FamilyTree
         TreeNode getNodeWithName(String targetName)
         {
             // Does this node have the target name?
+
             if (this.getName().equals(targetName))
+
+            if (parent.toString().equals(targetName))
+
                 return this;
                     
             // No, recurse. Check all children of this node.
             for (TreeNode child: children)
             {
             	TreeNode target = child.getNodeWithName(targetName);
+
             	if(target != null)
             	{
             		return target;
             	}
                 // If child.getNodeWithName(targetName) returns a non-null node,
+
+       
+            	// If child.getNodeWithName(targetName) returns a non-null node,
+
                 // then that's the node we're looking for. Return it.
             }
             
@@ -64,11 +90,12 @@ public class FamilyTree
         }
         
         
-        // Returns a list of ancestors of this TreeNode, starting with this node’s parent and
+        // Returns a list of ancestors of this TreeNode, starting with this node's parent and
         // ending with the root. Order is from recent to ancient.
         ArrayList<TreeNode> collectAncestorsToList()
         {
             ArrayList<TreeNode> ancestors = new ArrayList<>();
+
             while(parent != null)
             {
             	ancestors.add(parent);
@@ -79,8 +106,19 @@ public class FamilyTree
            
             // ?????  Collect ancestors of this TreeNode into the array list. HINT: going up
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
+
+
+            // Collect ancestors of this TreeNode into the array list. HINT: going up
+            // the nodes of a tree is like traversing a linked list. If that isn't clear,
+
             // draw a tree, mark any leaf node, and then mark its ancestors in order from
             // recent to ancient. Expect a question about this on the final exam.
+            
+            while(parent!= null)
+            {
+            	ancestors.add(parent);
+            	parent = parent.parent;
+            }
 
             return ancestors;
         }
